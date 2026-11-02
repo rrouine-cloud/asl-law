@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+@import "tailwindcss";
+
+/* Disable Tailwind dark mode variant completely so dark mode never activates at night */
+@variant dark (.never-match-dark);
+
+@theme {
+  --font-sans: "Noto Sans Arabic", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Amiri", serif;
+  --font-legal: "Lora", serif;
+  
+  --animate-shake: shake 0.5s ease-in-out;
+  
+  /* Modern Luxury Judicial Palette - Crisp Slate & Royal Sapphire */
+  --background: #f8fafc; /* Crisp modern slate-50 canvas */
+  --foreground: #0f172a; /* Deep slate-900 text */
+  --primary: #0f2d59; /* Luxurious Deep Royal Sapphire Blue */
+  --primary-foreground: #ffffff;
+  --accent: #0f766e; /* Majestic Imperial Emerald Teal */
+  --accent-foreground: #ffffff;
+  --secondary: #f1f5f9; /* Slate-100 neutral */
+  --muted: #64748b; /* Slate-500 muted text */
+  --border: #e2e8f0; /* Crisp slate-200 border */
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  
+  --judicial-gold: #d97706;
+  --judicial-navy: #0f2d59;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  50% { transform: translateX(10px); }
+  75% { transform: translateX(-10px); }
+}
+
+:root {
+  color-scheme: light !important;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --primary: #0f2d59;
+  --primary-foreground: #ffffff;
+  --accent: #0f766e;
+  --accent-foreground: #ffffff;
+  --secondary: #f1f5f9;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--background);
+  color: var(--foreground);
+  color-scheme: light !important;
+  direction: rtl;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.8;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans); /* Use sans for better modern readability */
+  color: var(--primary);
+  letter-spacing: -0.01em;
+  font-weight: 800;
+}
+
+.judicial-seal {
+  @apply relative inline-flex items-center justify-center border-4 border-double border-[var(--accent)] rounded-full text-[var(--accent)] font-serif;
+  box-shadow: inset 0 0 10px rgba(15, 118, 110, 0.1);
+}
+
+.judicial-heading {
+  @apply font-sans text-slate-900 dark:text-white border-r-8 border-[var(--accent)] pr-6 py-2 mb-6 tracking-tight;
+}
+
+.parchment-container {
+  background: #f8fafc;
+  background-image: radial-gradient(circle at 50% 50%, transparent, rgba(15, 118, 110, 0.03)),
+                    url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h100v100H0z' fill='none'/%3E%3Cpath d='M10 10l5 5 M90 90l-5-5 M10 90l5-5 M90 10l-5 5' stroke='%230f766e' stroke-opacity='0.03'/%3E%3C/svg%3E");
+}
+
+.legal-document {
+  @apply bg-white p-12 shadow-[0_10px_40px_rgba(0,0,0,0.08)] border border-slate-200 relative;
+  font-family: var(--font-legal);
+}
+
+.legal-document::before {
+  content: '';
+  @apply absolute top-0 right-0 w-2 h-full bg-[var(--primary)];
+}
+
+.document-stamp {
+  @apply absolute top-12 left-12 w-32 h-32 opacity-20 rotate-12 pointer-events-none;
+  filter: grayscale(1) sepia(1) hue-rotate(320deg) saturate(2);
+}
+
+.luxury-shadow {
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 10px -2px rgba(0, 0, 0, 0.02);
+}
+
+.dark .luxury-shadow {
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3), 0 2px 10px -2px rgba(0, 0, 0, 0.2);
+}
+
+.luxury-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03);
+  color: var(--card-foreground);
+}
+
+.luxury-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.08);
+  border-color: var(--accent);
+}
+
+.luxury-button {
+  @apply px-6 py-3 rounded-2xl font-bold transition-all duration-300 flex items-center justify-center gap-2 active:scale-95;
+}
+
+.luxury-button-primary {
+  @apply px-6 py-3 rounded-2xl font-bold transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 bg-[var(--primary)] text-[var(--primary-foreground)] shadow-lg shadow-blue-900/20 hover:opacity-90;
+}
+
+.luxury-button-accent {
+  @apply px-6 py-3 rounded-2xl font-bold transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 bg-[var(--accent)] text-[var(--accent-foreground)] shadow-lg shadow-teal-900/20 hover:opacity-90;
+}
+
+.luxury-input {
+  @apply w-full p-4 bg-[var(--secondary)] border border-[var(--border)] rounded-2xl focus:border-[var(--accent)]/30 focus:bg-[var(--background)] transition-all text-right font-bold shadow-inner outline-none text-[var(--foreground)];
+}
+
+.luxury-border {
+  border: 1px solid var(--border);
+}
+
+.glass-card {
+  background: var(--card);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  opacity: 0.95;
+}
+
+.gold-gradient {
+  background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%);
+}
+
+.navy-gradient {
+  background: linear-gradient(135deg, #070d19 0%, #0f1c30 100%);
+}
+
+/* Modern Ambient Lighting Canvas */
+.zellige-bg {
+  background-color: var(--background);
+  background-image: 
+    radial-gradient(ellipse 80% 60% at 50% -20%, rgba(15, 118, 110, 0.07), transparent),
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(15, 45, 89, 0.06), transparent),
+    radial-gradient(ellipse 50% 30% at 0% 100%, rgba(14, 165, 233, 0.04), transparent);
+  background-attachment: fixed;
+}
+
+.zellige-border {
+  position: relative;
+}
+
+.zellige-sidebar {
+  background-color: #ffffff;
+}
+
+.markdown-body {
+  @apply leading-relaxed text-[var(--foreground)];
+}
+
+.markdown-body h1, .markdown-body h2 {
+  @apply font-serif mt-8 mb-6 text-3xl;
+}
+
+.markdown-body p {
+  @apply mb-6 text-lg font-light;
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-amber-500/20 rounded-full;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  @apply bg-amber-500/40;
+}
+
+/* Fix for RTL overlapping in tight flex containers */
+.flex-tight {
+  @apply flex flex-nowrap items-center min-w-0;
+}

@@ -1,0 +1,122 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 0. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 1. Primitive Definition Helpers
+    function isSignedIn() { return request.auth != null; }
+    function isOwner(userId) { return isSignedIn() && request.auth.uid == userId; }
+    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+    
+    // 2. Validation Blueprints (The "Anti-Update-Gap")
+    
+    function isValidDeadline(data) {
+      return data.keys().hasAll(['userId', 'title', 'deadlineDate', 'status'])
+        && data.keys().size() >= 4
+        && data.userId == request.auth.uid
+        && data.title is string && data.title.size() <= 200
+        && data.deadlineDate is string && data.deadlineDate.size() <= 100
+        && data.status in ['SAFE', 'WARNING', 'CRITICAL', 'EXPIRED', 'DONE']
+        && (!data.keys().hasAny(['isAdmin', 'role']));
+    }
+
+    function isValidSession(data) {
+      return data.keys().hasAll(['userId', 'courtName', 'sessionDate', 'roomNumber', 'status'])
+        && data.keys().size() >= 5
+        && data.userId == request.auth.uid
+        && data.courtName is string && data.courtName.size() <= 200
+        && data.sessionDate is string && data.sessionDate.size() <= 100
+        && data.roomNumber is string && data.roomNumber.size() <= 50
+        && data.status in ['WAITING', 'POSTPONED', 'DELIBERATION', 'CLOSED']
+        && (!data.keys().hasAny(['isAdmin', 'role']));
+    }
+
+    function isValidPreference(data) {
+      return data.userId == request.auth.uid
+        && (data.get('theme', 'light') is string && data.get('theme', 'light').size() <= 20)
+        && (data.get('language', 'ar') is string && data.get('language', 'ar').size() <= 10);
+    }
+
+    // 3. Collection Match Blocks
+
+    // Deadlines
+    match /deadlines/{deadlineId} {
+      allow get, delete: if isOwner(existing().userId);
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      
+      allow create: if isSignedIn() 
+        && isValidId(deadlineId)
+        && isValidDeadline(incoming())
+        && incoming().keys().size() <= 10; // Simple key count check instead of complex traversal
+        
+      allow update: if isOwner(existing().userId)
+        && isValidDeadline(incoming())
+        && incoming().userId == existing().userId // Immutable owner
+        && (
+          // Action: Update Status
+          (incoming().diff(existing()).affectedKeys().hasOnly(['status', 'updatedAt']) && incoming().updatedAt == request.time) ||
+          // Action: Edit record
+          (incoming().diff(existing()).affectedKeys().hasOnly(['title', 'caseNumber', 'procedureType', 'notificationDate', 'deadlineDate', 'status', 'updatedAt']) && incoming().updatedAt == request.time)
+        );
+    }
+
+    // Court Sessions
+    match /court_sessions/{sessionId} {
+      allow get, delete: if isOwner(existing().userId);
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+
+      allow create: if isSignedIn()
+        && isValidId(sessionId)
+        && isValidSession(incoming());
+
+      allow update: if isOwner(existing().userId)
+        && isValidSession(incoming())
+        && incoming().userId == existing().userId // Immutable owner
+        && (
+          (incoming().diff(existing()).affectedKeys().hasOnly(['status', 'updatedAt']) && incoming().updatedAt == request.time) ||
+          (incoming().diff(existing()).affectedKeys().hasOnly(['courtName', 'city', 'courtType', 'sessionDate', 'sessionTime', 'roomNumber', 'orderNumber', 'status', 'updatedAt']) && incoming().updatedAt == request.time)
+        );
+    }
+
+    // User Preferences
+    match /user_preferences/{userId} {
+      allow read: if isOwner(userId);
+      allow create, update: if isOwner(userId) && isValidPreference(incoming());
+    }
+
+    // Saved Articles
+    match /saved_articles/{saveId} {
+      allow get, delete: if isOwner(existing().userId);
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() 
+        && incoming().userId == request.auth.uid
+        && incoming().articleId is string && incoming().articleId.size() <= 128
+        && incoming().title is string && incoming().title.size() <= 500;
+    }
+
+    // Search History
+    match /search_history/{searchId} {
+      allow get, delete: if isOwner(existing().userId);
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() 
+        && incoming().userId == request.auth.uid
+        && incoming().query is string && incoming().query.size() <= 500;
+    }
+
+    // Personalized Plans
+    match /personalized_plans/{planId} {
+      allow get, delete: if isOwner(existing().userId);
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() && incoming().userId == request.auth.uid && incoming().createdAt == request.time;
+      allow update: if isOwner(existing().userId) 
+        && incoming().userId == existing().userId
+        && incoming().updatedAt == request.time
+        && incoming().diff(existing()).affectedKeys().hasOnly(['tasks', 'progress', 'updatedAt', 'title']);
+    }
+  }
+}

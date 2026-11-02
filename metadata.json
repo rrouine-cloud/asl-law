@@ -1,0 +1,10 @@
+{
+  "name": "مفتاح القانون Law Key - المنصة القانونية الرقمية",
+  "description": "منصة قانونية مغربية متكاملة تشمل تحديد الاختصاص القضائي، حساب التعويضات، قارئ قوانين ذكي (TTS)، ونظام إدارة آجال متطور للطلبة والمحامين.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

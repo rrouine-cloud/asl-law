@@ -1,0 +1,21 @@
+{
+  "name": "مفتاح القانون Law Key",
+  "short_name": "Law Key",
+  "description": "المنصة القانونية الأولى بالمغرب - اسأل، ابحث، وتعلم القانون بالذكاء الاصطناعي",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0f766e",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

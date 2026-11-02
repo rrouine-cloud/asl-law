@@ -1,0 +1,121 @@
+{
+  "entities": {
+    "deadlines": {
+      "title": "Deadline",
+      "description": "Legal deadline tracked by a lawyer.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "The UID of the lawyer who owns this record." },
+        "title": { "type": "string", "description": "Display name of the case or deadline." },
+        "caseNumber": { "type": "string", "description": "Official court case number." },
+        "procedureType": { "type": "string", "description": "Category of the legal procedure." },
+        "notificationDate": { "type": "string", "format": "date", "description": "Date of notification or judgment." },
+        "deadlineDate": { "type": "string", "format": "date-time", "description": "Calculated final deadline date." },
+        "status": { "type": "string", "enum": ["SAFE", "WARNING", "CRITICAL", "EXPIRED", "DONE"], "description": "Current risk status." },
+        "notifiedStages": { "type": "array", "items": { "type": "string" }, "description": "Stages for which notifications were sent." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp of creation." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Timestamp of last update." }
+      },
+      "required": ["userId", "title", "deadlineDate", "status"]
+    },
+    "court_sessions": {
+      "title": "Court Session",
+      "description": "Immediate session in court tracked by a lawyer.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "The UID of the lawyer who owns this record." },
+        "courtName": { "type": "string", "description": "Name of the court." },
+        "city": { "type": "string", "description": "City of the court." },
+        "courtType": { "type": "string", "description": "Type of legal chamber (e.g., Civil, Commercial)." },
+        "sessionDate": { "type": "string", "format": "date", "description": "Date of the session." },
+        "sessionTime": { "type": "string", "description": "Time of the session." },
+        "roomNumber": { "type": "string", "description": "Courtroom number." },
+        "orderNumber": { "type": "string", "description": "Order in the session roll." },
+        "status": { "type": "string", "enum": ["WAITING", "POSTPONED", "DELIBERATION", "CLOSED"], "description": "Real-time status." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp of creation." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Timestamp of last update." }
+      },
+      "required": ["userId", "courtName", "city", "sessionDate", "roomNumber", "status"]
+    },
+    "user_preferences": {
+      "title": "User Preference",
+      "description": "User specific preferences and profile data.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "theme": { "type": "string" },
+        "language": { "type": "string" },
+        "notifications": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId"]
+    },
+    "saved_articles": {
+      "title": "Saved Article",
+      "description": "Legal articles saved by the user.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "articleId": { "type": "string" },
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "url": { "type": "string" },
+        "savedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "articleId", "title"]
+    },
+    "search_history": {
+      "title": "Search History",
+      "description": "User's search history.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "query": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "type": { "type": "string" }
+      },
+      "required": ["userId", "query", "timestamp"]
+    },
+    "personalized_plans": {
+      "title": "Personalized Study Plan",
+      "description": "Custom study plans for the user.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "tasks": { "type": "array" },
+        "progress": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "title"]
+    }
+  },
+  "firestore": {
+    "user_preferences/{userId}": {
+      "schema": "user_preferences",
+      "description": "User profile and preferences."
+    },
+    "saved_articles/{saveId}": {
+      "schema": "saved_articles",
+      "description": "Collection of articles saved by users."
+    },
+    "search_history/{searchId}": {
+      "schema": "search_history",
+      "description": "History of user searches."
+    },
+    "personalized_plans/{planId}": {
+      "schema": "personalized_plans",
+      "description": "User specific study plans."
+    },
+    "deadlines/{deadlineId}": {
+      "schema": "deadlines",
+      "description": "Collection of legal deadlines indexed by document ID."
+    },
+    "court_sessions/{sessionId}": {
+      "schema": "court_sessions",
+      "description": "Collection of real-time court sessions."
+    }
+  }
+}

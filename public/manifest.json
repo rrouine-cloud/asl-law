@@ -1,0 +1,15 @@
+{
+  "short_name": "مفتاح القانون",
+  "name": "مفتاح القانون Law Key",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "type": "image/jpeg",
+      "sizes": "192x192 512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#0f766e",
+  "theme_color": "#0f766e",
+  "display": "standalone"
+}
