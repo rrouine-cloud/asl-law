@@ -1,0 +1,17 @@
+<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="48" height="48" rx="12" fill="#0F2D59"/>
+  <!-- رأس المفتاح الدائري -->
+  <circle cx="24" cy="16" r="10.5" stroke="#F59E0B" strokeWidth="2"/>
+  <!-- قمة الميزان -->
+  <polygon points="24,9 26,11.5 24,14 22,11.5" fill="#F59E0B"/>
+  <!-- عارضة الميزان -->
+  <line x1="16.5" y1="13.5" x2="31.5" y2="13.5" stroke="#F59E0B" strokeWidth="1.5" strokeLinecap="round"/>
+  <!-- كفتا الميزان -->
+  <path d="M16 18C16 20 17.5 21 19.5 21C21.5 21 23 20 23 18H16Z" fill="#F59E0B"/>
+  <path d="M25 18C25 20 26.5 21 28.5 21C30.5 21 32 20 32 18H25Z" fill="#F59E0B"/>
+  <!-- ساق المفتاح والعمود -->
+  <rect x="22.5" y="26.5" width="3" height="15" rx="1.5" fill="#F59E0B"/>
+  <!-- مسننات المفتاح (الفقرات القانونية) -->
+  <path d="M25.5 32H32V34.5H28V36H33V38.5H25.5V32Z" fill="#F59E0B"/>
+  <circle cx="24" cy="42.5" r="1.5" fill="#F59E0B"/>
+</svg>

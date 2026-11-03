@@ -5,7 +5,8 @@
 
 import React from 'react';
 import { motion } from 'motion/react';
-import { Scale, Sparkles } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
+import { LawKeyEmblem } from './Logo';
 
 export default function SplashScreen() {
   return (
@@ -13,7 +14,7 @@ export default function SplashScreen() {
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.8, ease: 'easeInOut' }}
-      className="fixed inset-0 z-[1000] flex flex-col items-center justify-center bg-white dark:bg-slate-950"
+      className="fixed inset-0 z-[1000] flex flex-col items-center justify-center bg-white dark:bg-slate-950 font-sans"
     >
       <div className="relative">
         <motion.div
@@ -25,18 +26,9 @@ export default function SplashScreen() {
             repeat: Infinity,
             repeatType: "reverse"
           }}
-          className="w-32 h-32 rounded-[2.5rem] flex items-center justify-center shadow-2xl shadow-emerald-500/20 border border-emerald-400/20 relative overflow-hidden bg-gradient-to-br from-emerald-600 to-teal-800"
+          className="w-32 h-32 rounded-[2.5rem] flex items-center justify-center shadow-2xl shadow-[#0F2D59]/25 border border-[#F59E0B]/30 relative overflow-hidden bg-white p-5"
         >
-          <img 
-            src="/icon.png" 
-            alt="Logo" 
-            className="w-full h-full object-cover relative z-10" 
-            referrerPolicy="no-referrer"
-            onError={(e) => {
-              e.currentTarget.style.display = 'none';
-            }} 
-          />
-          <Scale className="w-16 h-16 text-amber-300 relative z-0" />
+          <LawKeyEmblem className="w-full h-full drop-shadow-md relative z-10" />
           
           {/* Decorative Sparks */}
           <motion.div
@@ -45,9 +37,9 @@ export default function SplashScreen() {
               opacity: [0.5, 1, 0.5]
             }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="absolute -top-4 -right-4 text-emerald-400"
+            className="absolute -top-3 -right-3 text-[#F59E0B]"
           >
-            <Sparkles className="w-8 h-8" />
+            <Sparkles className="w-7 h-7" />
           </motion.div>
         </motion.div>
 
@@ -56,7 +48,7 @@ export default function SplashScreen() {
           initial={{ rotate: 0 }}
           animate={{ rotate: 360 }}
           transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-0 -m-4 border-2 border-dashed border-emerald-500/30 rounded-[3rem]"
+          className="absolute inset-0 -m-4 border-2 border-dashed border-[#F59E0B]/30 rounded-[3rem]"
         />
       </div>
 
@@ -64,13 +56,17 @@ export default function SplashScreen() {
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.8 }}
-        className="mt-12 text-center"
+        className="mt-10 text-center"
       >
-        <h1 className="text-4xl font-serif font-black text-slate-900 dark:text-white mb-2 tracking-tight">مفتاح القانون</h1>
+        <h1 className="text-4xl sm:text-5xl font-serif font-black text-[#0F2D59] dark:text-white mb-2 tracking-tight">
+          مفتاح القانون
+        </h1>
         <div className="flex items-center justify-center gap-2">
-          <span className="w-8 h-px bg-emerald-500/30" />
-          <span className="text-xs font-black text-teal-600 uppercase tracking-[0.3em] opacity-80">Law Key</span>
-          <span className="w-8 h-px bg-emerald-500/30" />
+          <span className="w-8 h-px bg-[#F59E0B]/40" />
+          <span className="text-xs font-black text-[#D97706] dark:text-[#F59E0B] uppercase tracking-[0.2em]">
+            LAW KEY · المنظومة القانونية الرقمية
+          </span>
+          <span className="w-8 h-px bg-[#F59E0B]/40" />
         </div>
       </motion.div>
 
@@ -81,7 +77,7 @@ export default function SplashScreen() {
             initial={{ x: "-100%" }}
             animate={{ x: "0%" }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
-            className="h-full w-full bg-gradient-to-r from-teal-600 to-emerald-800"
+            className="h-full w-full bg-gradient-to-r from-[#0F2D59] via-[#D97706] to-[#F59E0B]"
           />
         </div>
       </div>

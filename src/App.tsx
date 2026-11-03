@@ -107,7 +107,7 @@ const FEATURE_REGISTRY: Record<string, FeatureDetails> = {
   '/': {
     name: 'الرئيسية',
     fullName: 'المنصة الرئيسية لـ مفتاح القانون',
-    description: 'البوابة القانونية الذكية المتكاملة للمواطنين والمهنيين والمراجعين',
+    description: 'المنظومة القانونية المغربية الشاملة للباحثين والمهنيين والعموم',
     icon: HomeIcon,
   },
   '/adala-map': {
@@ -119,7 +119,7 @@ const FEATURE_REGISTRY: Record<string, FeatureDetails> = {
   '/legal-finder': {
     name: 'المرجع القانوني',
     fullName: 'المرجع القانوني المغربي الشامل',
-    description: 'بحث فوري ودقيق وتصفح موضوعي في نصوص ومواد القوانين محلياً',
+    description: 'بحث فوري ودقيق في نصوص ومواد القوانين محلياً',
     icon: Search,
   },
   '/smart-assistant': {
@@ -215,7 +215,7 @@ function Footer() {
         </div>
         
         <p className="text-xs text-[var(--muted)] text-center md:text-right">
-          © {new Date().getFullYear()} مفتاح القانون Law Key. جميع الحقوق محفوظة.
+          © {new Date().getFullYear()} مفتاح القانون Law Key · المنظومة القانونية الرقمية. جميع الحقوق محفوظة.
           <br />
           <span className="mt-2 block font-bold text-teal-600/80">تم اعداد هدا التطبيق من طرف RIDA ROUINE</span>
         </p>

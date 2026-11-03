@@ -1,6 +1,6 @@
 {
   "short_name": "مفتاح القانون",
-  "name": "مفتاح القانون Law Key",
+  "name": "مفتاح القانون Law Key · المنصة القانونية الرقمية",
   "icons": [
     {
       "src": "/icon.png",
@@ -9,7 +9,7 @@
     }
   ],
   "start_url": "/",
-  "background_color": "#0f766e",
-  "theme_color": "#0f766e",
+  "background_color": "#0f2d59",
+  "theme_color": "#0f2d59",
   "display": "standalone"
 }
